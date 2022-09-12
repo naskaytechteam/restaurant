@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="facebook_app_id">2263741773782814</string>
+    <string name="app_name">RestaurantApp</string>
+    <string name="fb_login_protocol_scheme">fb2263741773782814</string>
+    <string name="facebook_client_token">bfb9557f81a9072a3155c6a66edfd323</string>
+</resources>
