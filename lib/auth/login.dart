@@ -7,11 +7,24 @@ import '../widgets/custom_elivated_button.dart';
 import '../widgets/remember_me.dart';
 import '../widgets/custom_textfield.dart';
 
-class Login extends StatelessWidget {
-  final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
+class Login extends StatefulWidget {
 
-  Login({Key? key}) : super(key: key);
+  const Login({Key? key}) : super(key: key);
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +68,7 @@ class Login extends StatelessWidget {
               height: height * 0.05,
             ),
             CustomTextField(
-                controller: email,
+                controller: _email,
                 textFieldType: 'Email',
                 textFieldText: 'Enter your Email..',
                 icon: Icons.email_outlined),
@@ -63,7 +76,7 @@ class Login extends StatelessWidget {
               height: height * 0.04,
             ),
             CustomTextField(
-                controller: password,
+                controller: _password,
                 textFieldType: 'Password',
                 textFieldText: 'Enter your password..',
                 icon: Icons.lock),
@@ -95,22 +108,24 @@ class Login extends StatelessWidget {
               height: height * 0.02,
             ),
             SizedBox(
-              height: height * 0.05,
-              width: width,
-              child: const Text.rich(
-                TextSpan(
+                height: height * 0.05,
+                width: width,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextSpan(text: 'Don\'t have an account?'),
-                    TextSpan(
-                        text: 'Sign Up',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline))
+                    const Text('Don\'t have an account '),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('SignUp',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline)),
+                    )
                   ],
-                ),
-                textAlign: TextAlign.center,
-              ),
-            )
+                ))
           ],
         ),
       ),
@@ -120,13 +135,17 @@ class Login extends StatelessWidget {
   void login(BuildContext context) async {
     Authentication authentication =
         Provider.of<Authentication>(context, listen: false);
-    if (email.text.isNotEmpty && password.text.isNotEmpty) {
-      authentication.loginWithEmail(email.text, password.text).then((value) {
+    if (_email.text.isNotEmpty && _password.text.isNotEmpty) {
+      authentication.loginWithEmail(_email.text, _password.text).then((value) {
+        _email.dispose();
+        _password.dispose();
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
           return const ChooseFavoriteFood();
         }));
+
+        log('user login successfully');
       }).onError((error, stackTrace) {
-        log('error');
+        log('error occurred in firebase login -> $error} ');
       });
     } else {
       log('please enter all the login details');
