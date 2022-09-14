@@ -37,12 +37,15 @@ dependencies:
   firebase_core: ^1.21.1
   provider: ^6.0.3
   flutter_svg: ^1.1.4
+  cloud_firestore: ^3.4.7
   firebase_auth: ^3.7.0
   google_sign_in: ^5.4.1
   flutter_login_facebook: ^1.6.0
   slide_to_act: ^2.0.1  #this is for slider slide to skip
   flutter_swiper: ^1.1.6
   delayed_display: any
+  image_picker: ^0.8.5+3
+#  country_code_picker: ^2.0.2
 
 
 dev_dependencies:
