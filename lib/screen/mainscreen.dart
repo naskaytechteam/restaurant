@@ -11,8 +11,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int currentBottomNavBarIndex = 0;
-  List<Widget> bottomNavBarScrren=[
+  int _currentBottomNavBarIndex = 0;
+  final List<Widget> _bottomNavBarScrren=[
     const Home(),
     Container(),
     Container(),
@@ -23,17 +23,17 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: IndexedStack(index: currentBottomNavBarIndex,children: bottomNavBarScrren,),
+      body: IndexedStack(index: _currentBottomNavBarIndex,children: _bottomNavBarScrren,),
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor:const Color.fromRGBO(238, 77, 42, 1),
           unselectedItemColor: Colors.black,
           onTap: (index) {
             setState(() {
-              currentBottomNavBarIndex = index;
-              log(currentBottomNavBarIndex.toString());
+              _currentBottomNavBarIndex = index;
+              log(_currentBottomNavBarIndex.toString());
             });
           },
-          currentIndex: currentBottomNavBarIndex,
+          currentIndex: _currentBottomNavBarIndex,
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(
