@@ -137,8 +137,6 @@ class _LoginState extends State<Login> {
         Provider.of<Authentication>(context, listen: false);
     if (_email.text.isNotEmpty && _password.text.isNotEmpty) {
       authentication.loginWithEmail(_email.text, _password.text).then((value) {
-        _email.dispose();
-        _password.dispose();
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
           return const ChooseFavoriteFood();
         }));
