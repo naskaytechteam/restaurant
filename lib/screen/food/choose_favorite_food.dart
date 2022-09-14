@@ -113,6 +113,7 @@ class _ChooseFavoriteFoodState extends State<ChooseFavoriteFood> {
       _selected = true;
     });
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (_) {
           return AlertDialog(
@@ -132,7 +133,7 @@ class _ChooseFavoriteFoodState extends State<ChooseFavoriteFood> {
       }));
       log('add Favorite Food Successfully');
     }).onError((error, stackTrace) {
-      log('error occurred in adding favorite food');
+      log('error occurred in adding favorite food $error');
     });
   }
 
