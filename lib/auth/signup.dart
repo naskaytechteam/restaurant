@@ -1,16 +1,22 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/screen/food/choose_favorite_food.dart';
 import '../providers/authentication.dart';
 import '../widgets/custom_elivated_button.dart';
 import '../widgets/custom_textfield.dart';
 
-class SignUp extends StatelessWidget {
-  final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
-  final TextEditingController confPassword = TextEditingController();
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
-  SignUp({Key? key}) : super(key: key);
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _confPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +41,8 @@ class SignUp extends StatelessWidget {
               child: Text(
                 'Welcome back!',
                 style: TextStyle(
-                    fontFamily: Theme.of(context).textTheme.headline2?.fontFamily,
+                    fontFamily:
+                        Theme.of(context).textTheme.headline2?.fontFamily,
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
               ),
@@ -52,22 +59,19 @@ class SignUp extends StatelessWidget {
               height: height * 0.03,
             ),
             CustomTextField(
-                controller: email,
+                controller: _email,
                 textFieldType: 'Email',
                 textFieldText: 'Enter your Email..',
                 icon: Icons.email_outlined),
-
             gapOfZeroPointFour(height),
             CustomTextField(
-                controller: password,
+                controller: _password,
                 textFieldType: 'Password',
                 textFieldText: 'Enter your Password..',
                 icon: Icons.lock),
-
             gapOfZeroPointFour(height),
-
             CustomTextField(
-                controller: confPassword,
+                controller: _confPassword,
                 textFieldType: 'Confirm Password',
                 textFieldText: 'Re-type your password..',
                 icon: Icons.lock),
@@ -75,35 +79,46 @@ class SignUp extends StatelessWidget {
               height: height * 0.03,
             ),
             CustomElevatedButton(
-              text: 'Sugn Up',
+              text: 'Sign Up',
               buttonClick: () => btnClick(context),
               backgroundColor: Colors.black,
             ),
-
             SizedBox(
               height: height * 0.02,
             ),
             SizedBox(
               height: height * 0.05,
               width: width,
-              child: const Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(text: 'Already have an account '),
-                    TextSpan(
-                        text: 'Login',
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Already have an account '),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Login',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline))
-                  ],
-                ),
-                textAlign: TextAlign.center,
+                            decoration: TextDecoration.underline)),
+                  )
+                ],
               ),
             ),
           ]),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    _confPassword.dispose();
+    log('controller are dispose successfully');
+    super.dispose();
   }
 
   Widget gapOfZeroPointFour(double height) {
@@ -115,14 +130,21 @@ class SignUp extends StatelessWidget {
   void btnClick(BuildContext context) {
     Authentication authentication =
         Provider.of<Authentication>(context, listen: false);
-    if (email.text.isNotEmpty &&
-        password.text.isNotEmpty &&
-        confPassword.text.isNotEmpty) {
-      authentication.signUpWithEmail(email.text, password.text);
+    if (_email.text.isNotEmpty &&
+        _password.text.isNotEmpty &&
+        _confPassword.text.isNotEmpty) {
+      authentication.signUpWithEmail(_email.text, _password.text).then((value) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+          return const ChooseFavoriteFood();
+        }));
+
+        log('new user signup successfully ');
+      }).onError((error, stackTrace) {
+        log('error in Firebase Signup(Firestore) $error');
+      });
     } else {
-      log('${email.text} ${password.text} ${confPassword.text}');
+      log('${_email.text} ${_password.text} ${_confPassword.text}');
       log('please fill all the details -> SignUp screen');
     }
   }
-
 }
