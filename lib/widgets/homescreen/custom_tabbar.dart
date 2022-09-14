@@ -2,15 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../config/colors.dart';
 
-class CustomTabBar extends StatefulWidget  {
-  const CustomTabBar({Key? key}) : super(key: key);
+class CustomTabBar extends StatelessWidget  {
+  final TickerProvider tickerProvider;
+  const CustomTabBar({required this.tickerProvider,Key? key}) : super(key: key);
 
-
-  @override
-  State<CustomTabBar> createState() => _CustomTabBarState();
-}
-
-class _CustomTabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -27,7 +22,7 @@ class _CustomTabBarState extends State<CustomTabBar> with TickerProviderStateMix
         unselectedLabelColor: Colors.black,
         isScrollable: true,
         indicatorColor: Colors.black,
-        controller: TabController(length: 4, vsync: this),
+        controller: TabController(length: 4,vsync:tickerProvider ),
         indicatorSize: TabBarIndicatorSize.label,
         indicator: BoxDecoration(
             color: orangeColor, borderRadius: BorderRadius.circular(25)),

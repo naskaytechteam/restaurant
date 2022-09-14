@@ -1,9 +1,7 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:restaurantapp/widgets/homescreen/home_app_bar.dart';
-import '../config/colors.dart';
-import '../widgets/homescreen/custom_swiper.dart';
-import '../widgets/homescreen/custom_tabbar.dart';
+import '/widgets/homescreen/custom_swiper.dart';
+import '/widgets/homescreen/custom_tabbar.dart';
+import '/widgets/homescreen/home_app_bar.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,7 +10,9 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home>  {
+class _HomeState extends State<Home> with TickerProviderStateMixin{
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -27,6 +27,7 @@ class _HomeState extends State<Home>  {
               SizedBox(
                 height: height * 0.03,
               ),
+
               const HomeAppBar(),
               SizedBox(
                 height: height * 0.03,
@@ -40,7 +41,7 @@ class _HomeState extends State<Home>  {
                 height: height * 0.03,
               ),
               // (height, width),
-              const CustomTabBar(),
+              CustomTabBar(tickerProvider: this,),
               SizedBox(
                 height: height * 0.03,
               ),
@@ -48,28 +49,6 @@ class _HomeState extends State<Home>  {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: orangeColor,
-        unselectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-              ),
-              label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-              ),
-              label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.favorite_border,
-              ),
-              label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-        ],
       ),
     );
   }
