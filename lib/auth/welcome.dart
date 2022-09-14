@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:restaurantapp/auth/signup.dart';
-import 'package:restaurantapp/config/colors.dart';
-import 'package:restaurantapp/widgets/custom_elivated_button.dart';
+import '/auth/signup.dart';
+import '/widgets/custom_elivated_button.dart';
 import 'login.dart';
 
 class Welcome extends StatefulWidget {
@@ -61,18 +60,19 @@ class _WelcomeState extends State<Welcome> with TickerProviderStateMixin{
                 height: height * 0.01,
               ),
               CustomElevatedButton(
-                buttonClick: ()=>buttonClick('Sign Up'),
+                  buttonClick: () => buttonClick('signup'),
                   fontFamily: Theme.of(context).textTheme.headline2?.fontFamily,
-                  text: 'Sign Up', backgroundColor: orangeColor),
+                  text: 'Sign Up',
+                  backgroundColor: const Color.fromRGBO(238, 77, 42, 1)),
               SizedBox(
                 height: height * 0.03,
               ),
-               CustomElevatedButton(
-                 buttonClick: ()=>buttonClick('Login'),
+              CustomElevatedButton(
+                  buttonClick: () => buttonClick('Login'),
                   text: 'Login',
                   textColor: Colors.black,
                   fontFamily: Theme.of(context).textTheme.headline2?.fontFamily,
-                  backgroundColor:const Color.fromRGBO(215, 217, 219, 1))
+                  backgroundColor: const Color.fromRGBO(215, 217, 219, 1))
             ],
           ),
         ),
@@ -80,17 +80,17 @@ class _WelcomeState extends State<Welcome> with TickerProviderStateMixin{
     );
   }
 
-  void buttonClick(String text){
+  void buttonClick(String text) {
     showBottomSheet(
         transitionAnimationController: AnimationController(
-            vsync: this, duration: const Duration(milliseconds: 1500)),
+            vsync: this, duration: const Duration(milliseconds: 900)),
         enableDrag: true,
         context: context,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20))),
         builder: (_) {
-          return text == 'Login' ? Login() : SignUp();
+          return text == 'Login' ?const Login() :const SignUp();
         });
   }
 }
