@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../widgets/cartscreen/cart_app_bar.dart';
+import '/widgets/custom_app_bar.dart';
 import '../widgets/cartscreen/cart_item.dart';
 import '../widgets/delay_screen.dart';
 import '../widgets/orderwidget.dart';
@@ -13,6 +13,8 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> with TickerProviderStateMixin {
+  bool _isCheckBoxSeleced = true;
+
   @override
   Widget build(BuildContext context) {
     int delay = 300;
@@ -27,11 +29,34 @@ class _CartState extends State<Cart> with TickerProviderStateMixin {
             SizedBox(
               height: height * 0.05,
             ),
-            CartAppBar(delay: delay),
+            DelayScreen(
+              delay: delay,
+                child: CustomAppBar(
+              firstIconClick: () {
+                Navigator.of(context).pop();
+              },
+              secondIcon: Image.asset(
+                'assets/images/hmenu.png',
+                fit: BoxFit.cover,
+              ),
+              firstIcon: const Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+                color: Colors.black,
+              ),
+              centerText: 'Cart',
+              secondIconClick: () {},
+            )),
             SizedBox(
               height: height * 0.03,
             ),
             CartItem(
+              isCheckBoxSelected: _isCheckBoxSeleced,
+              checkboxClick: (value) {
+                setState(() {
+                  _isCheckBoxSeleced = value;
+                });
+              },
               delay: delay,
             ),
           ],

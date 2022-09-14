@@ -3,11 +3,19 @@ import '../cartscreen/order_price.dart';
 import '../../config/colors.dart';
 import '../delay_screen.dart';
 import 'increase_order.dart';
+import 'dart:developer';
 
 class CartItem extends StatelessWidget {
   int delay;
+  final Function checkboxClick;
+  bool isCheckBoxSelected;
 
-  CartItem({required this.delay, Key? key}) : super(key: key);
+  CartItem(
+      {required this.delay,
+      required this.checkboxClick,
+      required this.isCheckBoxSelected,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +55,14 @@ class CartItem extends StatelessWidget {
                         width: width * 0.1,
                         height: height * 0.1,
                         child: Checkbox(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4)),
-                          fillColor: MaterialStateProperty.all(orangeColor),
-                          value: true,
-                          onChanged: (bool? value) {},
-                        ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4)),
+                            fillColor: MaterialStateProperty.all(orangeColor),
+                            value: true,
+                            onChanged: (bool? value) {
+                              log(
+                                  'value is $value }');
+                            }),
                       ),
                       orderImage(height, width),
                       SizedBox(
@@ -71,6 +81,7 @@ class CartItem extends StatelessWidget {
           }),
     );
   }
+
 
   Widget orderImage(double height, double width) {
     return Container(
