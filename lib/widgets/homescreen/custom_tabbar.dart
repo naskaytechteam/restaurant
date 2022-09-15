@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../config/colors.dart';
+class CustomTabBar extends StatelessWidget {
+  final Function onTap;
+  final String selectedChip;
 
-class CustomTabBar extends StatelessWidget  {
-  final TickerProvider tickerProvider;
-  const CustomTabBar({required this.tickerProvider,Key? key}) : super(key: key);
+  const CustomTabBar(
+      {required this.onTap, required this.selectedChip, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,28 +18,38 @@ class CustomTabBar extends StatelessWidget  {
       padding: const EdgeInsets.symmetric(vertical: 7),
       height: height * 0.07,
       width: width,
-      child: TabBar(
-        labelPadding: EdgeInsets.zero,
-        labelColor: Colors.white,
-        unselectedLabelColor: Colors.black,
-        isScrollable: true,
-        indicatorColor: Colors.black,
-        controller: TabController(length: 4,vsync:tickerProvider ),
-        indicatorSize: TabBarIndicatorSize.label,
-        indicator: BoxDecoration(
-            color: orangeColor, borderRadius: BorderRadius.circular(25)),
-        tabs: [
-          tabs('recommended'),
-          tabs('Junk food '),
-          tabs('Vegan'),
-          tabs('bre')
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          chips('Recommended'),
+          SizedBox(
+            width: width * 0.02,
+          ),
+          chips('Junk food'),
+          SizedBox(
+            width: width * 0.02,
+          ),
+          chips('Vegan'),
+          SizedBox(
+            width: width * 0.02,
+          ),
+          chips('Meat'),
         ],
       ),
     );
   }
 
-  Widget tabs(String text) {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20), child: Text(text));
+  Widget chips(String name) {
+    return InkWell(
+        onTap: () => onTap(name),
+        child: Chip(
+            label: Text(
+              name,
+              style: TextStyle(
+                  color: selectedChip == name ? Colors.white : Colors.black),
+            ),
+            backgroundColor: selectedChip == name
+                ?const Color.fromRGBO(242, 76, 37, 1)
+                : Colors.grey.shade50));
   }
 }

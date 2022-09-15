@@ -10,8 +10,8 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with TickerProviderStateMixin{
-
+class _HomeState extends State<Home> {
+  String selectedChip='Recommended';
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                 height: height * 0.03,
               ),
               // (height, width),
-              CustomTabBar(tickerProvider: this,),
+              CustomTabBar(onTap: (chips){
+                setState(() {
+                  selectedChip=chips;
+                });
+              },selectedChip: selectedChip,),
               SizedBox(
                 height: height * 0.03,
               ),
