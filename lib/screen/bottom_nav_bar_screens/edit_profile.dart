@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'dart:developer';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '/models/customer.dart';
@@ -37,6 +38,7 @@ class _EditProfileState extends State<EditProfile> {
     _location.dispose();
     _phone.dispose();
     _email.dispose();
+    log('edit Profile all controller dispose ');
     super.dispose();
   }
 

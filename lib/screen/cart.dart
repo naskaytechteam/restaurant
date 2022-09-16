@@ -64,6 +64,7 @@ class _CartState extends State<Cart> with TickerProviderStateMixin {
         bottomNavigationBar: DelayScreen(
           delay: delay += 100,
           child: OrderWidget(
+            price: 12,
             buttonText: 'Check Out',
             height: height * 0.12,
             containerPadding:
