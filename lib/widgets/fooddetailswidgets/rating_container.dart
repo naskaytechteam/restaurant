@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 
 class RatingContainer extends StatelessWidget {
-  const RatingContainer({Key? key}) : super(key: key);
+  final String foodName;
+  final int totalItem;
+  final VoidCallback increaseItemCount;
+  final VoidCallback decreaseItemCount;
+
+  const RatingContainer(
+      {required this.foodName, required this.totalItem,
+        required this.increaseItemCount,
+        required this.decreaseItemCount,
+        Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,35 +34,13 @@ class RatingContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Milky cheese Burger ',
+                  foodName,
                   style: TextStyle(
                       fontSize: 18,
                       fontFamily:
                           Theme.of(context).textTheme.headline2?.fontFamily),
                 ),
-                SizedBox(
-                  height: height * 0.04,
-                  width: width * 0.5,
-                  // color: Colors.pink,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      ),
-                      SizedBox(width: width * 0.01),
-                      const Text(
-                        '4.3',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        width: width * 0.01,
-                      ),
-                      const Text('(342 Reviews)')
-                    ],
-                  ),
-                )
+                review(height, width),
               ],
             ),
           ),
@@ -64,33 +52,58 @@ class RatingContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                CircleAvatar(
-                  radius: 12,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.black,
-                  ),
-                ),
+              children: [
+                icon(Icons.add,increaseItemCount),
                 Text(
-                  '1',
-                  style: TextStyle(
+                  totalItem.toString(),
+                  style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 18),
                 ),
-                CircleAvatar(
-                  radius: 12,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.remove,
-                    color: Colors.black,
-                  ),
-                ),
+                icon(Icons.remove,decreaseItemCount),
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget icon(IconData iconData,VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: CircleAvatar(
+        radius: 12,
+        backgroundColor: Colors.white,
+        child: Icon(
+          iconData,
+          color: Colors.black,
+        ),
+      ),
+    );
+  }
+
+  Widget review(double height, double width) {
+    return SizedBox(
+      height: height * 0.04,
+      width: width * 0.5,
+      // color: Colors.pink,
+      child: Row(
+        children: [
+          const Icon(
+            Icons.star,
+            color: Colors.yellow,
+          ),
+          SizedBox(width: width * 0.01),
+          const Text(
+            '4.3',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            width: width * 0.01,
+          ),
+          const Text('(342 Reviews)')
         ],
       ),
     );

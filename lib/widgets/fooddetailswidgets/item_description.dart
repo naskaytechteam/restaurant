@@ -1,33 +1,52 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import '../../config/colors.dart';
 
 class ItemDescription extends StatelessWidget {
-  const ItemDescription({Key? key}) : super(key: key);
+  final String foodDesc;
+  final bool readMore;
+  final TapGestureRecognizer tapGestureRecognizer;
+
+  const ItemDescription(
+      {required this.readMore,
+      required this.foodDesc,
+      required this.tapGestureRecognizer,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
-    return Container(
-      height: height * 0.08,
-      margin: const EdgeInsets.symmetric(horizontal: 22),
-      width: width,
-      // color: Colors.yellow,
-      child: const Text.rich(
+    return Card(
+      color: Colors.transparent,
+      elevation: 0,
+      // height: height * 0.08,
+      margin: EdgeInsets.symmetric(
+          horizontal: width * 0.05, vertical: height * 0.01),
+      // width: width,
+      child: Text.rich(
         TextSpan(children: [
+          //todo this logic can we be change
           TextSpan(
-              text: 'Lorem ipsum dolor'
-                  ' sit amet. sonsectetur adipiscing '
-                  'elit ut aliquam ,purus sit amet '
-                  'luctus venenatis, lectus magna feingilla uma... '),
-          TextSpan(
-              text: 'Read more',
-              style: TextStyle(color: orangeColor, fontWeight: FontWeight.bold))
+              text: readMore
+                  ? foodDesc
+                  : foodDesc.length > 140
+                      ? foodDesc.substring(0, 140)
+                      : foodDesc),
+          if (foodDesc.length > 140)
+            TextSpan(
+              recognizer: tapGestureRecognizer,
+              text: readMore ? 'Read Less' : '  Read more',
+              style: const TextStyle(
+                  color: orangeColor, fontWeight: FontWeight.bold),
+            )
+          else
+            const TextSpan()
         ]),
-        style: TextStyle(fontSize: 15),
-        maxLines: 3,
+        style: const TextStyle(fontSize: 15),
+        // maxLines: 3,
         textAlign: TextAlign.start,
       ),
     );

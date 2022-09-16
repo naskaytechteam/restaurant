@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 import '../../screen/cart.dart';
 
 class HeroImage extends StatelessWidget {
-  const HeroImage({Key? key}) : super(key: key);
+  final String heroTag;
+  final String foodImage;
+
+  const HeroImage(
+      {required this.heroTag,
+      required this.foodImage,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +18,18 @@ class HeroImage extends StatelessWidget {
     double height = size.height;
     double width = size.width;
     return Hero(
-      tag: '0',
+      tag: heroTag,
       transitionOnUserGestures: true,
       child: Container(
-        color: Colors.red,
+
         height: height * 0.47,
         width: width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(foodImage)
+          )
+        ),
         padding: const EdgeInsets.only(top: 20),
         child: Align(
           alignment: Alignment.topCenter,
@@ -27,9 +40,8 @@ class HeroImage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Material(
-                  //todo error when we remove material widget
-                  color: Colors.grey.withOpacity(0.6),
+                Card(
+                  color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
@@ -38,19 +50,19 @@ class HeroImage extends StatelessWidget {
                       height: height * 0.07,
                       width: width * 0.14,
                       decoration: BoxDecoration(
+                        color:Colors.grey.shade200.withOpacity(0.6),
                           borderRadius: BorderRadius.circular(10)),
                       child: const Icon(
                         Icons.arrow_back_ios,
-                        size: 20,
+                        size: 25,
                         color: Colors.white,
                       ),
                     ),
                   ),
                 ),
-                Material(
-                  //todo error-------------
-                  color: Colors.grey.withOpacity(0.6),
-
+                
+                Card(
+                  color:Colors.transparent,
                   child: InkWell(
                     onTap: () {
                       Navigator.of(context)
@@ -61,11 +73,13 @@ class HeroImage extends StatelessWidget {
                     child: Container(
                         height: height * 0.07,
                         width: width * 0.14,
+
                         decoration: BoxDecoration(
+                          color: Colors.grey.shade200.withOpacity(0.6),
                             borderRadius: BorderRadius.circular(10)),
                         child: const Icon(
                           Icons.add_shopping_cart,
-                          size: 20,
+                          size: 25,
                           color: Colors.white,
                         )),
                   ),

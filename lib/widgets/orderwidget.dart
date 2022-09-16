@@ -6,9 +6,12 @@ class OrderWidget extends StatelessWidget {
   final String buttonText;
   final double? height;
   final EdgeInsets? containerPadding;
+  final int price;
 
   const OrderWidget(
-      {required this.buttonText, this.height, this.containerPadding, Key? key})
+      {required this.buttonText, this.height,
+        required this.price,
+        this.containerPadding, Key? key})
       : super(key: key);
 
   @override
@@ -30,11 +33,11 @@ class OrderWidget extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text('Price'),
+                children: [
+                  const Text('Price'),
                   Text(
-                    '\$15.00',
-                    style: TextStyle(
+                   '\$${ price.toString()}',
+                    style:const TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 20,
                         color: Color.fromRGBO(197, 48, 32, 1)),
